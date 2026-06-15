@@ -30,21 +30,36 @@ public class CartController {
 
     @GetMapping
     public List<CartItemResponse> getCart(@RequestParam String userId) {
-        List<CartItem> cartItems = cartService.getCart(userService.getById(userId).getId());
+        List<CartItem> cartItems = cartService.getCart(
+                userService.getById(userId).getId()
+        );
 
         return cartItems.stream().map(ci -> {
             var product = productService.getById(ci.getProductId());
+
             CartItemResponse dto = new CartItemResponse();
             dto.setProductId(product.getId());
             dto.setProductName(product.getName());
             dto.setPrice(product.getPrice());
             dto.setQuantity(ci.getQuantity());
+
             return dto;
         }).collect(Collectors.toList());
     }
 
+    @DeleteMapping("/remove")
+    public void removeFromCart(
+            @RequestParam String userId,
+            @RequestParam String productId) {
+
+        User user = userService.getById(userId);
+        cartService.removeFromCart(user.getId(), productId);
+    }
+
     @DeleteMapping("/clear")
     public void clearCart(@RequestParam String userId) {
-        cartService.clearCart(userService.getById(userId).getId());
+        cartService.clearCart(
+                userService.getById(userId).getId()
+        );
     }
 }
