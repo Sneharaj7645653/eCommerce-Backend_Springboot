@@ -47,15 +47,6 @@ public class CartController {
         }).collect(Collectors.toList());
     }
 
-    @DeleteMapping("/remove")
-    public void removeFromCart(
-            @RequestParam String userId,
-            @RequestParam String productId) {
-
-        User user = userService.getById(userId);
-        cartService.removeFromCart(user.getId(), productId);
-    }
-
     @DeleteMapping("/clear")
     public void clearCart(@RequestParam String userId) {
         cartService.clearCart(
