@@ -14,9 +14,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class OrderItem {
     @Id
-    private String id;
-    private String orderId;
-    private String productId;
-    private int quantity;
-    private double price;
+    public String id;
+    public String orderId;
+    public String productId;
+    public int quantity;
+    public double price;
 }
